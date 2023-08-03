@@ -1,0 +1,121 @@
+.tf     --> HCL
+.tfvars --> HCL
+.tf.json --> json
+
+statefile --> resource.aws_instance.demo_instance
+  
+  <BLOCK TYPE> "<BLOCK LABEL>" "<BLOCK LABEL>" {
+    # Block body
+    <IDENTIFIER> = <EXPRESSION> # Argument
+  }
+  
+
+  Block Type --> 
+    resource, --> to create new resource
+    data,     --> to fetch/get/import existing resource
+    module,   --> re-use existing resource blocks to create new resources
+    Providers --> aws, azure, gcp
+    variable, --> input variable
+        types --> string, bool, list, map, number, set, tuple
+        dev
+        test
+        prod
+    outputs,  --> output variable
+        bucket names
+        vpc id
+        endpoint (elb, route53, s3static website)
+    local     --> local variable
+        name construct
+        variable use multiple time in same folder/template
+
+
+    resource "aws_s3" "demo_bucket" {
+        # Block body
+        bucket = "" # Argument
+    }
+
+    resource "aws_instance" "logical_name" {
+        # Block body
+        ami = "ami-xxx"
+        instance_type = "t2.mirco"
+        sg = ""
+        subn
+
+    }
+
+    aws_s3.demo_bucket.id
+
+    data "aws_s3" "import_bucket" {
+        bucket = "existing_bucket_name"
+    }
+
+    data.aws_s3.import_bucket.id
+
+    module "s3bucket" {
+        source = "module"
+    }
+
+    what is module 
+        folder  --> module
+            main.tf
+            variables.tf 
+            outputs.tf 
+
+
+    terraform {
+        required_providers {
+            mycloud = {
+            source  = "mycorp/mycloud"
+            version = "~> 1.0"
+            }
+        }
+    }
+        
+
+    terraform {
+        required_providers {
+            aws = {
+            source  = "hashipcorp/aws"
+            version = "~> 1.0"
+            }
+        }
+    }
+
+
+
+    terraform {
+        required_providers {
+          aws = {
+            source  = "hashicorp/aws"
+            version = "~> 5.0"
+          }
+        }
+    }
+
+    terraform {
+        required_providers {
+            azurerm = {
+            source  = "hashipcorp/azurerm"
+            version = "~> 1.0"
+            }
+        }
+    }
+
+    terraform {
+        required_providers {
+          azurerm = {
+            source  = "hashicorp/azurerm"
+            version = "=3.0.0"
+          }
+        }
+    }
+
+    provider "mycloud" {
+        # ...
+    }
+
+
+    provider "aws" {
+        # ...
+    }
+
