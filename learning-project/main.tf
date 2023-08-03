@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "rssr-uk-tf-backend-1"
-    key    = "terraform/uk/s3"
+    key    = "terraform/uk/learning-project"
     region = "eu-west-2"
     profile = "some"
   }

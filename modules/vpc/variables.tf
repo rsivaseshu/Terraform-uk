@@ -19,5 +19,5 @@ variable "env" {
 variable "vpc_cidr_block" {
   type = string 
   description = "Enter your cidr block for vpc"
-  default = "10.0.0.0/16"
+  default = "192.168.0.0/16"
 }

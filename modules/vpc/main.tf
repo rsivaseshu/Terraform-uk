@@ -5,10 +5,16 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket = "rssr-uk-tf-backend-1"
+    key    = "terraform/uk/modules/vpc.tfstate"
+    region = "eu-west-2"
+    profile = "some"
+  }
 }
 
-# provider "aws" {
-#   region  = "eu-west-2"
-#   profile = "some"
+provider "aws" {
+  region  = "eu-west-2"
+  profile = "some"
 
-# }
+}
