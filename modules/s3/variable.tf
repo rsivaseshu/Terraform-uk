@@ -52,3 +52,7 @@ variable "website" {
 
 }
 
+variable "attach_policy" {
+  type = bool 
+  default = false
+}
