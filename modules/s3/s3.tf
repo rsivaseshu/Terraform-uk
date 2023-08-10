@@ -20,13 +20,14 @@ resource "aws_s3_bucket_logging" "this" {
 
 resource "aws_s3_bucket_acl" "this" {
   count = var.create_bucket && var.acl !="null"  ? 1:0
+  bucket = aws_s3_bucket.example[0].id
   acl = var.acl 
   
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
-  count = var.create_bucket && var.attach_policy
-  bucket = aws_s3_bucket.example[0].id
+  count = var.create_bucket && var.attach_policy ? 1 : 0
+  bucket = aws_s3_bucket.this[0].id
 
   block_public_acls       = var.block_public_acls
   block_public_policy     = var.block_public_policy
@@ -37,7 +38,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
 resource "aws_s3_bucket_policy" "this" {
   count = var.create_bucket && var.attach_policy ? 1 : 0
   depends_on = [ aws_s3_bucket_public_access_block.this ]
-  bucket = aws_s3_bucket.example[0].id
+  bucket = aws_s3_bucket.this[0].id
   policy = data.aws_iam_policy_document.static_website_policy.json
 }
 
@@ -54,8 +55,8 @@ data "aws_iam_policy_document" "static_website_policy" {
     ]
 
     resources = [
-      aws_s3_bucket.example[0].arn,
-      "${aws_s3_bucket.example[0].arn}/*",
+      aws_s3_bucket.this[0].arn,
+      "${aws_s3_bucket.this[0].arn}/*",
     ]
   }
 }
