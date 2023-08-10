@@ -79,6 +79,6 @@ variable "restrict_public_buckets" {
 
 variable "expected_bucket_owner" {
   type = string 
-  default = "null"
+  default = "304051859177"
   
 }
