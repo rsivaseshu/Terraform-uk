@@ -39,7 +39,7 @@ resource "aws_s3_bucket_policy" "this" {
   count = var.create_bucket && var.attach_policy ? 1 : 0
   depends_on = [ aws_s3_bucket_public_access_block.this ]
   bucket = aws_s3_bucket.this[0].id
-  policy = data.aws_iam_policy_document.static_website_policy.json
+  policy = data.aws_iam_policy_document.static_website_policy[0].json
 }
 
 data "aws_iam_policy_document" "static_website_policy" {
@@ -63,6 +63,7 @@ data "aws_iam_policy_document" "static_website_policy" {
 
 resource "aws_s3_bucket_website_configuration" "this" {
   count = var.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.this[0].id
 
   dynamic "index_document" {
     for_each = try ([var.website["index_document"]], [])
