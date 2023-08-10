@@ -17,10 +17,17 @@ resource "aws_s3_bucket_logging" "this" {
   target_bucket = var.logging["target_bucket"]
   target_prefix = try(var.logging["target_prefix"], null)
 }
+resource "aws_s3_bucket_ownership_controls" "example" {
+  count = var.create_bucket && var.acl !="null"  ? 1:0
+  bucket = aws_s3_bucket.this[0].id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
 
 resource "aws_s3_bucket_acl" "this" {
   count = var.create_bucket && var.acl !="null"  ? 1:0
-  
+   depends_on = [aws_s3_bucket_ownership_controls.example]
   bucket = aws_s3_bucket.this[0].id
   expected_bucket_owner = var.expected_bucket_owner
   acl = var.acl 
