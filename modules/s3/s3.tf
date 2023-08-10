@@ -20,8 +20,9 @@ resource "aws_s3_bucket_logging" "this" {
 
 resource "aws_s3_bucket_acl" "this" {
   count = var.create_bucket && var.acl !="null"  ? 1:0
-  depends_on = [ aws_s3_bucket_public_access_block.this ]
+  
   bucket = aws_s3_bucket.this[0].id
+  expected_bucket_owner = var.expected_bucket_owner
   acl = var.acl 
   
 }
