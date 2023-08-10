@@ -26,7 +26,7 @@ resource "aws_s3_bucket_acl" "this" {
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
-  count = var.create_bucket && var.attach_policy ? 1 : 0
+  count = var.create_bucket  ? 1 : 0
   bucket = aws_s3_bucket.this[0].id
 
   block_public_acls       = var.block_public_acls

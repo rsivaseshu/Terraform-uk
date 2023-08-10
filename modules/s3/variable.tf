@@ -59,20 +59,20 @@ variable "attach_policy" {
 
 variable "block_public_acls" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "block_public_policy" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "ignore_public_acls" {
   type = bool
-  default = true
+  default = false
 }
 
 variable "restrict_public_buckets" {
   type = bool 
-  default = true
+  default = false
 }
